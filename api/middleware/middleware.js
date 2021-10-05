@@ -1,11 +1,25 @@
+const Users = require("../users/users-model.js");
+
 function logger(req, res, next) {
   // DO YOUR MAGIC
   console.log(`METHOD: ${req.method} | URL: ${req.path} | ${Date.now()}`);
   next();
 }
 
-function validateUserId(req, res, next) {
+async function validateUserId(req, res, next) {
   // DO YOUR MAGIC
+  try {
+    const { id } = req.params;
+    const user = await Users.getById(id);
+    if (user) {
+      req.user = user;
+      next();
+    } else {
+      next({ status: 404, message: "user not found" });
+    }
+  } catch (err) {
+    next({ err });
+  }
 }
 
 function validateUser(req, res, next) {

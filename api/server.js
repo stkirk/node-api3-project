@@ -23,9 +23,7 @@ server.use("*", (req, res, next) => {
 //error handling middleware
 server.use((err, req, res, next) => {
   console.log("ERROR:", err);
-  res
-    .status(err.status || 500)
-    .json({ message: `Something went wrong: ${err.status} ${err.message}` });
+  res.status(err.status || 500).json({ message: `${err.message}` });
 });
 
 module.exports = server;
