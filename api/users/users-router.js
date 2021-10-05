@@ -10,7 +10,7 @@ router.get("/", (req, res) => {
   res.send("Hello from users router");
 });
 
-router.get("/:id", (req, res) => {
+router.get("/:id", (req, res, next) => {
   // RETURN THE USER OBJECT
   // this needs a middleware to verify user id
 });

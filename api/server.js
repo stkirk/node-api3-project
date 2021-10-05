@@ -13,4 +13,18 @@ server.get("/", (req, res) => {
   res.send(`<h2>Let's write some middleware!</h2>`);
 });
 
+//catchall
+server.use("*", (req, res, next) => {
+  console.log(`hit endpoint that doesn't exist: ${req.method} ${req.baseUrl}`);
+  next({ status: 404, message: "not found" });
+});
+
+//error handling middleware
+server.use((err, req, res, next) => {
+  console.log("ERROR:", err);
+  res
+    .status(err.status || 500)
+    .json({ message: `Something went wrong: ${err.status} ${err.message}` });
+});
+
 module.exports = server;
